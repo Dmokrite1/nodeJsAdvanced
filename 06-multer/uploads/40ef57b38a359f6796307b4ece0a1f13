@@ -1,0 +1,195 @@
+-- Sélectionner toutes les données
+-- de la table acteur
+SELECT * FROM actor;
+
+-- Sélection juste le prénom et le nom
+-- d'un acteur
+SELECT first_name, last_name FROM actor;
+
+-- Il faut absolument un espace après les doubles tirets pour que la ligne soit comprise comme un commentaire
+
+-- Pour utiliser un nom réservé comme nom de colonne dans une query. On peut l'échapper en l'entourant de back tick
+SELECT `group` from example;
+
+-- La convention de nomage en sql est le snake_case
+
+-- On peut limiter le nombre de résultats de nos requêtes avec LIMIT [nombrer]
+SELECT first_name , last_name FROM actor LIMIT 42;
+
+
+-- Avec OFFSET, on lui demande de passer les 40 premiers résultats (pour avoir les actors 41 à 80)
+SELECT actor_id, first_name , last_name FROM actor LIMIT 40 OFFSET 40;
+
+-- ORDER BY permet de trier les résultats selon une colonne
+SELECT * from actor ORDER BY last_name DESC;
+-- On peut rajouter ASC (pour ascendant) et DESC (pour descendant) à la fin pour préciser l'ordre dans lequel ça doit être trié
+
+-- Sélectionner les 5 films les plus longs
+SELECT * FROM film ORDER BY `length` DESC LIMIT 15;
+
+-- Trier les films par ordre alphabétique
+SELECT * FROM film ORDER BY title;
+
+-- On peut ordonner selon plusieurs colonnes
+SELECT * FROM film ORDER BY `length`, title;
+
+-- Sélectionne tous les acteurs où le prénom est égale à PENELOPE
+SELECT * from actor WHERE first_name='PENELOPE';
+
+-- Tous les acteurs dont l'id est strictement supérieur à 45
+SELECT * from actor WHERE actor_id > 45;
+
+-- Tous les paiements dont le montant est plus grand ou égale à 10.99
+SELECT * from payment where amount >= 10.99;
+
+-- Selectionner tous les clients actifs
+
+SELECT * FROM customer WHERE active = TRUE;
+
+SELECT * FROM customer WHERE active = 1;
+
+-- Selectionner tous les films sauf "ACADEMY DINOSAUR"
+
+SELECT * FROM film WHERE title != "ACADEMY DINOSAUR";
+
+SELECT * FROM film WHERE NOT title = "ACADEMY DINOSAUR";
+
+-- Selectionner tous les films dont la longueur est inférieur ou égale à 126 minutes
+
+SELECT * FROM film WHERE `length` <= 126;
+
+-- On a rassemblé 2 colonnes ensemble avec la fonction CONCAT
+-- On a utlisé AS pour donner un nom au résultat de notre fonction concat
+SELECT actor_id,CONCAT(first_name, " ", last_name) AS full_name from actor;
+
+-- On transforme le rental rate. D'abord en l'arrondissant en ajoutant 0.01 Puis en multipliant par 2
+SELECT (rental_rate + 0.01) * 2 AS note_sur_10 from film;
+
+-- Afficher la longueur des films en HEURE puis les trié par longueur décroissante
+
+SELECT title,`length`/60 AS duration_per_hour FROM film ORDER BY `length` DESC;
+
+-- LIKE 
+-- Tout les acteurs dont le prénom commence par J 
+SELECT * from actor WHERE first_name LIKE 'J%';
+
+-- Tout les acteurs dont le prénom commence JUD et qui ont 4 lettres précisément 
+SELECT * from actor WHERE first_name LIKE 'JUD_';
+
+-- Tous les acteur dont le prénom termine par A
+SELECT * from actor WHERE first_name LIKE '%A';
+
+-- Sélectionner les 5 premiers textes de films ayant une description contenant le mot "Woman".
+SELECT * FROM film_text WHERE description LIKE '%Woman%' LIMIT 5;
+
+-- IN 
+-- Sélectionne tous les actors dont le prénom est BEN OU ALBERT
+SELECT * FROM actor WHERE first_name IN ("BEN", "ALBERT");
+
+-- Sélectionner films ayant un rating PG,NC-17 et R
+
+SELECT * FROM film WHERE rating IN ("PG", "NC-17", "R");
+
+-- BETWEEN AND
+SELECT * FROM customer WHERE create_date BETWEEN '2006-03-01' AND '2006-03-31';
+
+-- Avec un between, sélectionner les locations entre le 20 mai 2005 et le 25 mai 2005 inclus et les trier du plus récent au plus ancien
+SELECT * FROM rental WHERE rental_date BETWEEN '2005-05-20' AND '2005-05-26' ORDER BY rental_date DESC;
+
+-- Le format de la date est toujours 'Année-Mois-Jour'
+
+-- NOT 
+
+SELECT * FROM customer WHERE NOT first_name = 'MARY';
+
+SELECT * FROM film WHERE NOT rating IN ("PG", "NC-17", "R");
+
+-- Sélectionner les clients qui ne se sont pas inscrits entre le 13 et la 14 février 2006.
+
+SELECT * FROM customer WHERE create_date NOT BETWEEN '2006-02-12' AND '2006-02-15';
+
+-- AND 
+
+SELECT * FROM actor WHERE first_name="Bruno" AND last_name="BASINGER";
+
+SELECT * FROM customer WHERE active AND store_id = 1 LIMIT 10;
+
+-- OR
+
+SELECT * FROM actor WHERE first_name = "BRUNO" OR last_name = "GUINESS";
+
+SELECT * from customer where first_name="LAURA" OR last_name="SMITH";
+
+-- Grouper les conditions
+SELECT * from film WHERE (film_id > 10 OR `length` < 180) AND (rating = 'PG');
+
+-- Selectionner un film qui contient DINOSAUR dans son titre ou Dont l'id est supérieur à 42 ET qui contient Battle dans sa decription
+
+SELECT * FROM film WHERE (title LIKE "%DINOSAUR%" OR film_id > 42 ) AND description LIKE "%Battle%";
+
+SELECT * FROM film WHERE  original_language_id IS NULL;
+
+SELECT * FROM staff WHERE picture IS NULL;
+
+
+-- UNION 
+-- UNION supprime les doublons
+-- Je dois utiliser UNION ALL si je veux garder les doublons
+SELECT first_name, last_name from actor
+UNION ALL
+SELECT title, description from film;
+
+
+SELECT CONCAT(first_name, ' ', last_name) FROM customer WHERE first_name LIKE '%PAUL%' OR first_name LIKE '%DINO%' OR
+last_name LIKE '%PAUL%' OR 
+last_name LIKE '%DINO%'
+UNION ALL
+SELECT title FROM film
+WHERE title LIKE '%PAUL%' OR title LIKE '%DINO%'
+UNION ALL
+SELECT CONCAT(first_name, ' ', last_name) FROM actor 
+WHERE first_name LIKE '%PAUL%' OR 
+first_name LIKE '%DINO%' OR 
+last_name LIKE '%PAUL%' OR 
+last_name LIKE '%DINO%';
+
+-- On lui demander de regrouper un enregistrement de location avec un enregistrement de client. On fait le lien grâce à la colonne customer_id présent dans mes 2 tables
+SELECT customer.first_name, customer.last_name, rental.rental_date FROM rental
+JOIN customer ON rental.customer_id = customer.customer_id;
+
+SELECT film.title, actor.first_name, actor.last_name FROM film_actor JOIN 
+actor ON film_actor.actor_id = actor.actor_id JOIN film ON film_actor.film_id = film.film_id;
+
+-- LEFT JOIN
+
+SELECT * from category
+LEFT JOIN film_category
+ON film_category.category_id = category.category_id 
+LEFT JOIN film
+on film.film_id  = film_category.film_id;
+
+-- Selectioner toutes les langues ainsi que les films associés à cet langue même si aucun film n'est dans cet langue
+SELECT language.name AS language, film.title AS film
+FROM language
+LEFT JOIN film ON language.language_id = film.language_id;
+
+-- RIGHT JOIN 
+
+SELECT * FROM film
+RIGHT JOIN language 
+ON language.language_id = film.language_id;
+
+
+SELECT * FROM rental
+RIGHT JOIN customer 
+ON rental.customer_id = customer.customer_id;
+
+-- Sélectionner les locations effectuées par les clients, ainsi que leurs noms, même si aucun enregistrement n'est présent dans la table des locations.
+SELECT customer.first_name, customer.last_name, rental.rental_id
+FROM rental
+RIGHT JOIN customer ON customer.customer_id = rental.customer_id;
+
+-- CROSS JOIN 
+
+SELECT film.title, language.name FROM
+film CROSS JOIN language;

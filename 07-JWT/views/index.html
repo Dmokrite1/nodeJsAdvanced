@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <title>Connexion</title>
+</head>
+<body>
+    <h1>Page de Connexion</h1>
+    <ul>
+        <li>
+            <form enctype="multipart/form-data" method="post">
+                <div>
+                    <label for="name">Entrez votre nom</label>
+                    <input id="name" type="text" name="name" required>
+                    <label for="password">Entrez votre password</label>
+                    <input id="password" type="password" name="password" required>
+                    <div class="btn">
+                    <button id="connect" type="submit">Sign in</button>
+                    </div>
+                </div>    
+            </form>
+        </li>
+    </ul>
+    <p id="message"></p>
+    <script>
+        async function login(name, password) {
+            try {
+                const dataUser = {name: name, password: password}
+                const response = await fetch("http://localhost:8001/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(dataUser)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+                }
+
+            const data = await response.json();
+            console.log(data);
+
+            // Show token pour l'exercice mais à ne surtout jamais faire
+            //document.getElementById('message').innerText = `Token: ${data.token}`;
+            document.getElementById('message').innerText = `Token récupéré et stocké dans le localStorage`;
+            // Stocke le token dans le localStorage
+            localStorage.setItem("token", data.token);
+            } catch (error) {
+                console.error("Erreur lors de la connexion:", error);
+            }
+        }
+
+        const loginButton = document.getElementById('connect').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const password = document.getElementById('password').value;
+            await login(name, password);
+        });
+    </script>
+</body>
+</html>

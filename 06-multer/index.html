@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my images</title>
+</head>
+<body>
+    <form action="/uploads_file" enctype="multipart/form-data" method="post">
+        <div>
+            <label for="file">My new image</label>
+            <input type="file" name="my_super_file" id="file">
+        </div>
+        <div>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username">
+        </div>
+        <div>
+            <label for="audio">My new audio</label>
+            <input type="file" name="my audio" id="audio">
+            <audio name="my_super_file"></audio>
+        </div>
+        <button type="submit">Send the file</button>
+    </form>
+
+    <form action="/sound_list" enctype="multipart/form-data" method="post">
+        <div>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username">
+        </div>
+        <div>
+            <label for="audio">My new audio</label>
+            <input type="file" name="audio_file" id="audio">
+            <audio name="my_super_file"></audio>
+        </div>
+        <button type="submit">Send the file</button>
+    </form>
+
+    <h2>Create sound</h2>
+    <form action="/sound_list/create" enctype="multipart/form-data" method="post">
+        <div>
+            <label for="name">Sound name</label>
+            <input type="text" name="username" id="username">
+        </div>
+        <div>
+            <label for="audio">My new audio file</label>
+            <input type="file" name="audio_file" id="audio" accept="audio/*">
+        </div>
+        <button type="submit">Send the file</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  mysql:  
+    image: mysql:8
+    ports:
+      - 3376:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: bot
+      MYSQL_DATABASE: bot
+      MYSQL_USER: bot
+      MYSQL_PASSWORD: bot

@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: rgb(160, 241, 255);
+    animation: clignotant 2ms infinite alternate;
+}
+
+.container {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+h1 {
+    display: inline-block;
+    color: #ffffff;
+    border-color: 1px solid white;
+    font-size: 36px;
+    animation: clignotant 2ms infinite alternate, defiler 8s linear infinite;
+}
+
+p {
+    color: rgb(255, 255, 255);
+    background-color: #000000;
+    animation: clignotant 2ms infinite alternate;
+}
+
+@keyframes clignotant {
+    from {
+        opacity: 3;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes defiler {
+    from {
+        transform: translateX(1000%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}

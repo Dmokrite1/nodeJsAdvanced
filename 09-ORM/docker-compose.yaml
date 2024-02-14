@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  mysql:  
+    image: mysql:8
+    ports:
+      - 3336:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: test123*
+      MYSQL_DATABASE: bot-theorie
+      MYSQL_USER: bot-theorie
+      MYSQL_PASSWORD: bot-theorie
