@@ -85,7 +85,7 @@ async function init() {
             releaseDate: MoreThan(new Date('2016-01-01')) // Utilisation de l'opérateur MoreThan pour filtrer les jeux avec une date de sortie après le 1er janvier 2016
         },
         take: 1 // Nombre maximum de résultats à retourner (dans ce cas, 1)
-        // skip: 1, skipe le premier est affiche le deuxième
+        // skip: 1, skip  le premier est affiche le deuxième
     });
 
     console.log(ouinOuinGames);
