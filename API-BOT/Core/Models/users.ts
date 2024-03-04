@@ -11,22 +11,26 @@ export class User {
     public declare id: string;
     
     @Column({
-        unique: true
+        unique: true,
+        type: 'string'
     })
     public declare username: string;
 
     @Column({
-        length: 32
+        length: 32,
+        type: 'string'
     })
     public declare firstName: string;
 
     @Column({
-        length: 32
+        length: 32,
+        type: 'string'
     })
     public declare lastName: string;
 
     @Column({
-        length: 60
+        length: 60,
+        type: 'string'
     })
     public declare password: string;
 
