@@ -49,4 +49,8 @@ export class DatabaseConnection {
 
         this.databaseConnection = connection;
     }
+
+    public static async closeConnection() {
+        await this.databaseConnection?.destroy();
+    }
 }
