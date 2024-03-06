@@ -3,7 +3,6 @@ import { deleteUser, getAllUsers, getUserById, insertUser, updateUser } from "..
 import { createAuthorizeMiddleWare } from "../Middlewares/authorize.middleware";
 import { Role } from "../../Core/Models/users";
 
-
 export const userRouter = Router();
 
 userRouter.use(createAuthorizeMiddleWare([Role.ADMIN]));

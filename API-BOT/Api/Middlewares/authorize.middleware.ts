@@ -4,6 +4,7 @@ import { verify } from "jsonwebtoken";
 
 export function createAuthorizeMiddleWare(roles: string[]): RequestHandler {
     return async (request: Request, response: Response, next: NextFunction) => {
+    
         const token = request.cookies.accessToken;
     
 
@@ -26,6 +27,8 @@ export function createAuthorizeMiddleWare(roles: string[]): RequestHandler {
                 return response.status(403).send("Forbidden");
             }
         } catch(e) {
+            console.log(e);
+            
             return response.status(401).send("Unauthorized");
         }
         

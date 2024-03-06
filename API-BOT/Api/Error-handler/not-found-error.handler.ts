@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { EntityNotFoundError } from "../Errors/entity-not-found.error";
-import { NotFoundError } from "../Errors/not-found.Error";
+import { NotFoundError } from "../Errors/not-found.error";
 
 export function notFoundErrorHandler(
     error: Error,

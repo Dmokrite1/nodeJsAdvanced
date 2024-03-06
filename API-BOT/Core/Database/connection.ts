@@ -37,11 +37,12 @@ export class DatabaseConnection {
     public static async init() {
         const connection = new DataSource({
             host: 'localhost',
-            port: 3376,
+            port: 3306,
             database: process.env.DB_DATABASE,
             username: process.env.DB_USERNAME,
             password: process.env.DB_PASSWORD,
             type: 'mysql',
+            logging: false,
             entities: ["Core/Models/*.ts"]
         });
         

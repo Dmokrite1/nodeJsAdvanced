@@ -1,6 +1,6 @@
+import { EntityNotFoundError } from "../../Api/Errors/entity-not-found.error";
 import { DatabaseConnection } from "./connection";
 import { User } from "../Models/users";
-import { EntityNotFoundError } from "../../Api/Errors/entity-not-found.error";
 
 export async function getAllUsers() {
     return DatabaseConnection.manager.find(User);

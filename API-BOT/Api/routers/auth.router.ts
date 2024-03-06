@@ -2,9 +2,9 @@ import { compare } from "bcrypt";
 import { Router } from "express";
 import { sign } from "jsonwebtoken";
 import { DatabaseConnection } from "../../Core/Database/connection";
+import { User } from "../../Core/Models/users";
 import { EntityNotFoundError } from "../Errors/entity-not-found.error";
 import rateLimit from "express-rate-limit";
-import { User } from "../../Core/Models/users";
 
 const authRouter = Router();
 
@@ -14,9 +14,12 @@ authRouter.get('/login', async (request, response) => {
 });
 
 // authentication
-authRouter.post('/login', rateLimit({
-    limit: 1, windowMs: 1 * 1000
-}),async (request, response, next) => {
+authRouter.post('/login', 
+    rateLimit({
+        limit: 1,
+        windowMs: 1 * 1000
+    }),
+async (request, response, next) => {
     const { username , password } = request.body;
 
     const user = await DatabaseConnection.manager.findOne(User, {

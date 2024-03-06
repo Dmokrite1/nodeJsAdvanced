@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
-import { Sound } from "../Models/sounds";
+import { Sound } from "./sounds";
 
 @Entity()
 export class Category {

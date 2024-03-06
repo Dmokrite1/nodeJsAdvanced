@@ -7,7 +7,6 @@ import { createAuthorizeMiddleWare } from "../Middlewares/authorize.middleware";
 import { FileValidationMiddleware } from "../Middlewares/file-validation.middleware";
 import { Role } from "../../Core/Models/users";
 
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './uploads');

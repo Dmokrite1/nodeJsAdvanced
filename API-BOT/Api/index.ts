@@ -2,13 +2,13 @@ import cookieParser from "cookie-parser";
 import express, { Application, json } from "express";
 import rateLimit from "express-rate-limit";
 import mustacheExpress from "mustache-express";
-import { internalServerErrorHandler } from "./Error-handler/internal-server-error.handler";
-import { notFoundErrorHandler } from "./Error-handler/not-found-error.handler";
-import { NotFoundError } from "./Errors/not-found.Error";
+import { internalServerErrorHandler } from "./Error-Handler/internal-server-error.handler";
+import { notFoundErrorHandler } from "./Error-Handler/not-found-error.handler";
+import { NotFoundError } from "./Errors/not-found.error";
 import { loggerMiddleware } from "./Middlewares/logger.middleware";
-import { authRouter } from "./routers/auth.router";
-import { soundRouter } from "./routers/sounds.router";
-import { userRouter } from "./routers/users.router";
+import { authRouter } from "./Routers/auth.router";
+import { soundRouter } from "./Routers/sounds.router";
+import { userRouter } from "./Routers/users.router";
 
 const PORT = 8081;
 
@@ -17,6 +17,7 @@ export function initApi() {
     
     application.engine('mustache', mustacheExpress());
     application.set('view engine', 'mustache');
+    // attention . => chemin par rapport à l'endroit de l'éxécution du programme
     application.set('views', './Api/Views');
     
     application.use(rateLimit({
@@ -40,7 +41,9 @@ export function initApi() {
     application.use(internalServerErrorHandler);
     
     
-    application.listen(PORT, () => {
+    const httpServer = application.listen(PORT, () => {
         console.log(`Prêt et à l\'écoute sur http://localhost:${PORT}`);
-    })
+    });
+
+    return httpServer;
 }

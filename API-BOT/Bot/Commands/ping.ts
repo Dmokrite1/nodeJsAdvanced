@@ -6,7 +6,6 @@ export const builder = (builder: SlashCommandBuilder) => {
     return builder.setDescription('Makes me ping');
 }
 
-
 // execution de la commande
 export async function execute(interaction: CommandInteraction) {
     await interaction.reply({
